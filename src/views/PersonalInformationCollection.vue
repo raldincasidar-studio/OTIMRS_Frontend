@@ -1,5 +1,12 @@
 <script setup>
 // import TheWelcome from '../components/TheWelcome.vue'
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+
+function goBack() {
+    window.history.length > 1 ? this.router.go(-1) : this.router.push('/')
+}
 </script>
 
 <template>
@@ -10,7 +17,14 @@
     </div>
     <div class="form-container">
       <div class="container">
-        <h1>Personal Information</h1>
+        <h1>
+          <a @click="goBack()" href="#!" class="icon-button">
+              <i class="material-icons">
+                  arrow_back
+              </i>
+          </a>
+          Personal Information
+        </h1>
 
         <div class="input-group">
           <div class="input-container">
@@ -48,10 +62,10 @@
         </div>
 
         <div style="text-align: right">
-          <a href="#!" class="submit-button">
+          <router-link to="/hotel-bookings" class="submit-button">
             NEXT
             <i class="material-icons">chevron_right</i>
-          </a>
+          </router-link>
         </div>
       </div>
     </div>
@@ -108,6 +122,24 @@
         font-size: 25px;
         color: #515151;
         margin-bottom: 50px;
+
+        .icon-button {
+            padding: 5px 10px;
+            display: inline;
+            // outline: 1px solid red;
+            // background-color: rgb(227, 227, 227);
+            border-radius: 50%;
+            transition: all .3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+            &:hover {
+                background-color: rgb(227, 227, 227);
+            }
+            &:focus {
+                background-color: #2A9DF2;
+                color: white;
+                transform: scale(0.9);
+            }
+        }
       }
 
       .input-group {
