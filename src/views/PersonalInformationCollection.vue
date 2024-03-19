@@ -1,11 +1,65 @@
 <script setup>
 // import TheWelcome from '../components/TheWelcome.vue'
+import toast from '@/plugins/toast';
+import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
+import {useTouristStore} from '@/stores/tourist';
 
 const router = useRouter();
+const tourist = useTouristStore();
+
+const email = ref('');
+const first_name = ref('');
+const middle_name = ref('');
+const last_name = ref('');
+const gender = ref('');
+const birthdate = ref('');
+const address = ref('');
+const nationality = ref('');
 
 function goBack() {
     window.history.length > 1 ? this.router.go(-1) : this.router.push('/')
+}
+
+onMounted( () => {
+  if (tourist.personal_information.email) {
+    email.value = tourist.personal_information.email
+    first_name.value = tourist.personal_information.first_name
+    middle_name.value = tourist.personal_information.middle_name
+    last_name.value = tourist.personal_information.last_name
+    gender.value = tourist.personal_information.gender
+    birthdate.value = tourist.personal_information.birthdate
+    address.value = tourist.personal_information.address
+    nationality.value = tourist.personal_information.nationality
+  }
+} )
+
+function next() {
+
+
+  if (email.value == "") return toast.fire({ title: 'Email is required!', icon: 'warning' })
+  if (first_name.value == "") return toast.fire({ title: 'First name is required!', icon: 'warning' })
+  if (last_name.value == "") return toast.fire({ title: 'Last name is required!', icon: 'warning' })
+  if (address.value == "") return toast.fire({ title: 'Address is required!', icon: 'warning' })
+  if (nationality.value == "") return toast.fire({ title: 'Nationality is required!', icon: 'warning' })
+
+  const data = {
+    email:        email.value,
+    first_name:   first_name.value,
+    middle_name:  middle_name.value,
+    last_name:    last_name.value,
+    gender:       gender.value,
+    birthdate:    birthdate.value,
+    address:      address.value,
+    nationality:  nationality.value,
+  }
+
+  tourist.personal_information = data;
+  toast.fire({
+    title: 'Please input your acommodation',
+    icon: 'info'
+  })
+  router.push('/hotel-bookings');
 }
 </script>
 
@@ -27,45 +81,50 @@ function goBack() {
         </h1>
 
         <div class="input-group">
-          <div class="input-container">
-            <input type="text" placeholder="Email Address (@gmail.com)">
-            <i class="material-icons">email</i>
-          </div>
-          <div class="input-container one-third">
-            <input type="text" placeholder="First Name">
-            <i class="material-icons">email</i>
-          </div>
-          <div class="input-container one-third">
-            <input type="text" placeholder="Middle Name">
-            <i class="material-icons">email</i>
-          </div>
-          <div class="input-container one-third">
-            <input type="text" placeholder="Last Name">
-            <i class="material-icons">email</i>
-          </div>
-          <div class="input-container one-third">
-            <input type="text" placeholder="Gender">
-            <i class="material-icons">email</i>
-          </div>
-          <div class="input-container one-third">
-            <input type="text" placeholder="Birth Date">
-            <i class="material-icons">email</i>
-          </div>
-          <div class="input-container one-third">
-            <input type="text" placeholder="Address">
-            <i class="material-icons">email</i>
-          </div>
-          <div class="input-container one-third">
-            <input type="text" placeholder="Nationality">
-            <i class="material-icons">email</i>
-          </div>
+            <div class="input-container">
+                <input v-model="email" type="text" placeholder="Email Address (@gmail.com)">
+                <i class="material-icons">email</i>
+            </div>
+            <div class="input-container one-third">
+                <input v-model="first_name" type="text" placeholder="First Name">
+                <i class="material-icons">person</i>
+            </div>
+            <div class="input-container one-third">
+                <input v-model="middle_name" type="text" placeholder="Middle Name">
+                <i class="material-icons">person</i>
+            </div>
+            <div class="input-container one-third">
+                <input v-model="last_name" type="text" placeholder="Last Name">
+                <i class="material-icons">person</i>
+            </div>
+            <div class="input-container one-third">
+                <!-- <input type="text" placeholder="Gender"> -->
+                <select v-model="gender" name="gender" id="gender">
+                  <option value="" selected disabled>Select Gender</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                </select>
+                <i class="material-icons">wc</i>
+            </div>
+            <div class="input-container one-third">
+                <input v-model="birthdate" type="date" placeholder="Birth Date">
+                <i class="material-icons">event</i>
+            </div>
+            <div class="input-container one-third">
+                <input v-model="address" type="text" placeholder="Address">
+                <i class="material-icons">location_on</i>
+            </div>
+            <div class="input-container one-third">
+                <input v-model="nationality" type="text" placeholder="Nationality">
+                <i class="material-icons">language</i>
+            </div>
         </div>
 
         <div style="text-align: right">
-          <router-link to="/hotel-bookings" class="submit-button">
+          <button @click="next()" class="submit-button">
             NEXT
             <i class="material-icons">chevron_right</i>
-          </router-link>
+          </button>
         </div>
       </div>
     </div>
@@ -157,7 +216,8 @@ function goBack() {
             width: calc(33.33% - 30px);
           }
 
-          input {
+          input,
+          select {
             width: 100%;
             padding: 15px 20px;
             padding-right: 50px;
@@ -168,9 +228,25 @@ function goBack() {
             border: 0;
             border-bottom: 2px solid #2A9DF2;
             background-color: #e7e8ee;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
 
             &:focus {
               box-shadow: 0 3px 6px #2a9bf253;
+            }
+
+            &[type="date"]::-webkit-inner-spin-button,
+            &[type="date"]::-webkit-calendar-picker-indicator {
+                opacity: 0;
+                // margin-right: -25px;
+                padding: 5px;
+                opacity: 0;
+                // outline: 1px solid red;
+            }
+
+            option {
+              border: 0;
             }
           }
 
@@ -180,8 +256,9 @@ function goBack() {
             right: 0;
             top: 0;
             // outline: 1px solid red;
-            padding: 15px;
-            margin-right: 15px;
+            padding: 16px;
+            margin-right: 5px;
+            pointer-events: none;
           }
         }
       }
@@ -199,6 +276,9 @@ function goBack() {
         justify-self: flex-end;
         transition: all .3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         color: white;
+        border: 0;
+        outline: 0;
+        cursor: pointer;
 
         &:hover {
 

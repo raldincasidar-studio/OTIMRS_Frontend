@@ -3,14 +3,14 @@
         <img src="../../assets/img/admin-logo.svg" alt="">
         <div class="texts">
             <i class="material-icons">account_circle</i>
-            <h3>You are logged in as Administrator</h3>
+            <h3>You are logged in as {{ auth.admin?.first_name || 'None' }}</h3>
             <p>This is the dashboard page, and it is not yet done, the login/logout API is now working.</p>
             
             <div style="text-align: center">
-                <router-link to="/" class="submit-button">
+                <a @click="logOut()" class="submit-button">
                     <i class="material-icons">logout</i>
                     LOGOUT
-                </router-link>
+                </a>
             </div>
         </div>
     </div>
@@ -133,3 +133,28 @@
     }
 }
 </style>
+
+<script setup>
+import { useAuthStore } from '../../stores/auth';
+import {useRouter} from 'vue-router';
+import { makeRequest } from '../../plugins/axios';
+import toast from '@/plugins/toast';
+
+const auth = useAuthStore();
+const router = useRouter();
+
+async function logOut() {
+    
+    await makeRequest.post('/logout', {
+        session_id: auth.admin.session_id
+    });
+    auth.admin = {};
+
+    toast.fire({
+        title: 'Logged out',
+        icon: 'info'
+    })
+    router.push('/admin/login');
+}
+
+</script>

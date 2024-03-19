@@ -17,10 +17,10 @@
             </div>
             
             <div style="text-align: center">
-                <a @click="login()" class="submit-button">
+                <button @click="login()" class="submit-button">
                     <i class="material-icons">lock</i>
                     LOGIN
-                </a>
+                </button>
             </div>
         </div>
     </div>
@@ -96,8 +96,8 @@
                 right: 0;
                 top: 0;
                 // outline: 1px solid red;
-                padding: 15px;
-                margin-right: 15px;
+                padding: 16px;
+                margin-right: 5px;
             }
         }
     }
@@ -116,6 +116,9 @@
         transition: all .3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         color: white;
         width: 100%;
+        border: 0;
+        cursor: pointer;
+        outline: 0;
         
         &:hover {
             
@@ -143,65 +146,50 @@
 import {ref} from 'vue';
 import {useRouter} from 'vue-router';
 import Swal from 'sweetalert2';
+import { makeRequest } from '../../plugins/axios';
+import Toast from '../../plugins/toast';
+import { useAuthStore } from '../../stores/auth';
 
 const router = useRouter();
+const auth = useAuthStore();
 
 const username = ref('');
 const password = ref('');
 
-function login() {
-    if (username.value == 'admin' && password.value == 'admin123') {
-        Swal.fire({
-            icon: "success",
-            title: "Welcome Administrator",
-            toast: true,
-            position: "top-end",
-            showConfirmButton: false,
-            timer: 3000,
-            timerProgressBar: true,
-            customClass: {
-                container: 'dont-base-reset',
-                popup: 'dont-base-reset',
-                header: 'dont-base-reset',
-                title: 'dont-base-reset',
-                closeButton: 'dont-base-reset',
-                icon: 'dont-base-reset',
-                image: 'dont-base-reset',
-                content: 'dont-base-reset',
-                input: 'dont-base-reset',
-                actions: 'dont-base-reset',
-                confirmButton: 'dont-base-reset',
-                cancelButton: 'dont-base-reset',
-                footer: 'dont-base-resets'
-            }
-        })
-        router.push('/admin/dashboard');
-    } else {
-        Swal.fire({
-            icon: "error",
-            title: "Invalid username or password",
-            toast: true,
-            position: "top-end",
-            showConfirmButton: false,
-            timer: 3000,
-            timerProgressBar: true,
-            customClass: {
-                container: 'dont-base-reset',
-                popup: 'dont-base-reset',
-                header: 'dont-base-reset',
-                title: 'dont-base-reset',
-                closeButton: 'dont-base-reset',
-                icon: 'dont-base-reset',
-                image: 'dont-base-reset',
-                content: 'dont-base-reset',
-                input: 'dont-base-reset',
-                actions: 'dont-base-reset',
-                confirmButton: 'dont-base-reset',
-                cancelButton: 'dont-base-reset',
-                footer: 'dont-base-resets'
-            }
-        })
-    }
+async function login() {
+
+
+    let getLogin;
+
+    getLogin = await makeRequest.post('/login', {
+        username: username.value,
+        password: password.value,
+    });
+
+    Toast.fire({
+        title: 'Logged in Successfuly',
+        icon: 'success'
+    })
+
+    auth.admin = getLogin.data;
+
+    router.push('/admin/dashboard');
+    console.log(getLogin.data)
+
+    
+
+    // if (username.value == 'admin' && password.value == 'admin123') {
+    //     Toast.fire({
+    //         icon: "success",
+    //         title: "Welcome Administrator",
+    //     })
+    //     router.push('/admin/dashboard');
+    // } else {
+    //     Toast.fire({
+    //         icon: "error",
+    //         title: "Invalid username or password",
+    //     })
+    // }
 }
 
 </script>

@@ -23,24 +23,24 @@
                         
                         <div class="input-group">
                             <div class="input-container">
-                                <input type="text" placeholder="Acommodation Name">
-                                <i class="material-icons">email</i>
+                                <input type="text" placeholder="Accommodation Name" v-model="acommodation_name">
+                                <i class="material-icons">business</i>
                             </div>
                             <div class="input-container">
-                                <input type="text" placeholder="Acommodation Location">
-                                <i class="material-icons">email</i>
+                                <input type="text" placeholder="Accommodation Location" v-model="acommodation_location">
+                                <i class="material-icons">location_on</i>
                             </div>
                             <div class="input-container">
-                                <input type="text" placeholder="How may days">
-                                <i class="material-icons">email</i>
+                                <input type="text" placeholder="How many days" v-model="acommodation_how_many_days">
+                                <i class="material-icons">event_available</i>
                             </div>
                         </div>
                         
                         <div style="text-align: right">
-                            <a href="#!" @click="saveDetails()" class="submit-button">
+                            <button @click="saveDetails()" class="submit-button">
                                 GET STARTED
                                 <i class="material-icons">chevron_right</i>
-                            </a>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -89,6 +89,9 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        border: 0;
+        cursor: pointer;
+        outline: 0;
         
         .container {
             max-width: 1500px;
@@ -191,6 +194,9 @@
                 justify-self: flex-end;
                 transition: all .3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
                 color: white;
+                border: 0;
+                outline: 0;
+                cursor: pointer;
                 
                 &:hover {
                     
@@ -219,41 +225,61 @@
 </style>
 
 <script setup>
+import { makeRequest } from '@/plugins/axios';
+import toast from '@/plugins/toast';
+import { useTouristStore } from '@/stores/tourist';
+import axios from 'axios';
 import Swal from 'sweetalert2'
+import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
+const tourist = useTouristStore();
+
+const acommodation_name = ref('');
+const acommodation_location = ref('');
+const acommodation_how_many_days = ref('');
 
 function goBack() {
     window.history.length > 1 ? this.router.go(-1) : this.router.push('/')
 }
 
-function saveDetails() {
+onMounted(() => {
+    if (tourist.accommodation.name) {
+        acommodation_name.value = tourist.accommodation.name
+        acommodation_location.value = tourist.accommodation.location
+        acommodation_how_many_days.value = tourist.accommodation.days
+    }
+})
+
+async function saveDetails() {
     // TODO
 
-    Swal.fire({
-        icon: "info",
-        title: "To be done",
-        toast: true,
-        position: "top-end",
-        showConfirmButton: false,
-        timer: 3000,
-        timerProgressBar: true,
-        customClass: {
-            container: 'dont-base-reset',
-            popup: 'dont-base-reset',
-            header: 'dont-base-reset',
-            title: 'dont-base-reset',
-            closeButton: 'dont-base-reset',
-            icon: 'dont-base-reset',
-            image: 'dont-base-reset',
-            content: 'dont-base-reset',
-            input: 'dont-base-reset',
-            actions: 'dont-base-reset',
-            confirmButton: 'dont-base-reset',
-            cancelButton: 'dont-base-reset',
-            footer: 'dont-base-resets'
-        }
+    if (acommodation_name.value === "" || acommodation_location.value === "" || acommodation_how_many_days.value === "")
+        return toast.fire({ title: 'All fields are required!', icon: 'warning' });
+
+    tourist.accommodation = {
+        name: acommodation_name.value,
+        location: acommodation_location.value,
+        days: acommodation_how_many_days.value,
+    }
+
+    const submitToDatabase = await makeRequest.post('/register_tourist', {
+        name: tourist.accommodation.name,
+        location: tourist.accommodation.location,
+        days: tourist.accommodation.days,
+        email: tourist.personal_information.email,
+        first_name: tourist.personal_information.first_name,
+        last_name: tourist.personal_information.last_name,
+        gender: tourist.personal_information.gender,
+        birthdate: tourist.personal_information.birthdate,
+        address: tourist.personal_information.address,
+        nationality: tourist.personal_information.nationality,
+    })
+
+    if (submitToDatabase.data.message) toast.fire({
+        icon: "success",
+        title: submitToDatabase.data.message,
     })
 }
 </script>
