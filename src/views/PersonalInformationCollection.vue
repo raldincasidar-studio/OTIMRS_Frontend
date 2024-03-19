@@ -44,7 +44,7 @@ function goBack() {
             <i class="material-icons">email</i>
           </div>
           <div class="input-container one-third">
-            <input type="text" placeholder="Gender Name">
+            <input type="text" placeholder="Gender">
             <i class="material-icons">email</i>
           </div>
           <div class="input-container one-third">
@@ -105,7 +105,7 @@ function goBack() {
     width: 100%;
     padding: 20px 0;
     padding-top: 50px;
-    background-color: white;
+    background-color: #F2F3F9;
     border-top-right-radius: 50px;
     border-top-left-radius: 50px;
     min-height: calc(100vh - 125px);

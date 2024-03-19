@@ -82,7 +82,7 @@
         width: 100%;
         padding: 20px 0;
         padding-top: 50px;
-        background-color: white;
+        background-color: #F2F3F9;
         border-top-right-radius: 50px;
         border-top-left-radius: 50px;
         min-height: calc(100vh - 125px);
