@@ -173,6 +173,9 @@ async function login() {
 
     auth.admin = getLogin.data;
 
+    // add a authorization header to the request
+    makeRequest.defaults.headers.common['Authorization'] = `${getLogin.data.session_id}`
+
     router.push('/admin/dashboard');
     console.log(getLogin.data)
 

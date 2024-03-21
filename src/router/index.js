@@ -42,6 +42,22 @@ const router = createRouter({
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/admin/Dashboard.vue')
+    },
+    {
+      path: '/admin/tourist-information',
+      name: 'admin/tourist-information',
+      // route level code-splitting
+      // this generates a separate chunk (About.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import('../views/admin/TouristInformation.vue')
+    },
+    {
+      path: '/admin/tourist-information/:id',
+      name: 'admin/tourist-information/:id',
+      // route level code-splitting
+      // this generates a separate chunk (About.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import('../views/admin/Tourist/Edit.vue')
     }
   ]
 })

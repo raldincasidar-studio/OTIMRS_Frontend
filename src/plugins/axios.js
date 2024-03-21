@@ -1,12 +1,20 @@
 import axios from 'axios'
 import Toast from './toast'
+import { useAuthStore } from '../stores/auth'
+import toast from './toast'
+
+const auth = useAuthStore()
 
 export const makeRequest = axios.create({
-  baseURL: 'http://localhost:8000/api'
+  baseURL: 'http://localhost:8000/api',
+
+  headers: {
+    Authorization: auth.admin.session_id || null
+  }
 })
 
 makeRequest.interceptors.response.use(
-  function (response) {
+  async function (response) {
     // Any status code that lie within the range of 2xx cause this function to trigger
     // Do something with response data
     if (response.data.error) {
@@ -14,6 +22,17 @@ makeRequest.interceptors.response.use(
         title: response.data.error,
         icon: 'error'
       })
+
+      if (response.data.logout) {
+        await makeRequest.get('/logout')
+        auth.admin = {}
+
+        toast.fire({
+          title: 'Logged out',
+          icon: 'info'
+        })
+        router.push('/admin')
+      }
       return Promise.reject()
     }
     return response
