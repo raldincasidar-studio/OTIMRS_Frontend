@@ -6,7 +6,7 @@ import toast from './toast'
 const auth = useAuthStore()
 
 export const makeRequest = axios.create({
-  baseURL: 'http://localhost:8000/api',
+  baseURL: 'https://36553951-f574-4d56-8d1d-329977aac7cc-00-2cvydytpsmjsw.picard.replit.dev/api',
 
   headers: {
     Authorization: auth.admin.session_id || null

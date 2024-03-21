@@ -271,7 +271,7 @@ async function saveDetails() {
         email: tourist.personal_information.email,
         first_name: tourist.personal_information.first_name,
         last_name: tourist.personal_information.last_name,
-        midle_name: tourist.personal_information.midle_name,
+        middle_name: tourist.personal_information.middle_name,
         gender: tourist.personal_information.gender,
         birthdate: tourist.personal_information.birthdate,
         address: tourist.personal_information.address,

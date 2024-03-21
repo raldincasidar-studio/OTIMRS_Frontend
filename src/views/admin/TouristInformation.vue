@@ -235,12 +235,6 @@
             flex-wrap: wrap;
             gap: 25px;
 
-            &.skeleton {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-
             .item {
                 width: calc(100%/4 - 25px);
                 padding: 30px;
@@ -250,6 +244,15 @@
                 transition: all .3s cubic-bezier(0.165, 0.84, 0.44, 1);
                 display: block;
                 text-decoration: none;
+
+
+
+                &.skeleton {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    border: 1px dashed #d9d9d9;
+                }
 
                 &:hover {
                     background-color: rgba(0, 0, 0, 0.056);
@@ -285,6 +288,8 @@
                     }
                 }
             }
+
+
         }
     }
 }
