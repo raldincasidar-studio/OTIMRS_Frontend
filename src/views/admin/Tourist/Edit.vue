@@ -23,63 +23,150 @@
                             arrow_back
                         </i>
                     </a>
-                    Juan Magic Luna
+                    {{ info.first_name ? `${info.first_name} ${info.middle_name || ''} ${info.last_name}` : 'Loading ...' }}
                 </h1>
-                <h2 class="subheader">Personal Information</h2>
-                <div class="input-group">
-                    <div class="input-container">
-                        <input readonly type="text" placeholder="Email Address (@gmail.com)">
-                        <i class="material-icons">email</i>
-                    </div>
-                    <div class="input-container one-third">
-                        <input readonly type="text" placeholder="First Name">
-                        <i class="material-icons">person</i>
-                    </div>
-                    <div class="input-container one-third">
-                        <input readonly type="text" placeholder="Middle Name">
-                        <i class="material-icons">person</i>
-                    </div>
-                    <div class="input-container one-third">
-                        <input readonly type="text" placeholder="Last Name">
-                        <i class="material-icons">person</i>
-                    </div>
-                    <div class="input-container one-third">
-                        <!-- <input type="text" placeholder="Gender"> -->
-                        <select readonly name="gender" id="gender">
-                            <option value="" selected disabled>Select Gender</option>
-                            <option value="Male">Male</option>
-                            <option value="Female">Female</option>
-                        </select>
-                        <i class="material-icons">wc</i>
-                    </div>
-                    <div class="input-container one-third">
-                        <input readonly type="date" placeholder="Birth Date">
-                        <i class="material-icons">event</i>
-                    </div>
-                    <div class="input-container one-third">
-                        <input readonly type="text" placeholder="Address">
-                        <i class="material-icons">location_on</i>
-                    </div>
-                    <div class="input-container one-third">
-                        <input readonly type="text" placeholder="Nationality">
-                        <i class="material-icons">language</i>
-                    </div>
+                <div class="skeleton" v-if="info == 'loading...'" style="text-align:center">
+                    <svg
+                        role="img"
+                        width="1114"
+                        height="286"
+                        aria-labelledby="loading-aria"
+                        viewBox="0 0 1114 286"
+                        preserveAspectRatio="none"
+                        >
+                        <title id="loading-aria">Loading...</title>
+                        <rect
+                            x="0"
+                            y="0"
+                            width="100%"
+                            height="100%"
+                            clip-path="url(#clip-path)"
+                            style='fill: url("#fill");'
+                        ></rect>
+                        <defs>
+                            <clipPath id="clip-path">
+                                <rect x="0" y="79" rx="9" ry="9" width="354" height="47" /> 
+                                <path d="M 0 -0.5 h 354.001" /> 
+                                <rect x="0" y="158" rx="9" ry="9" width="354" height="47" /> 
+                                <path d="M 0 -0.5 h 354.001" /> 
+                                <rect x="0" y="0" rx="9" ry="9" width="1114" height="47" /> 
+                                <rect x="380" y="79" rx="9" ry="9" width="354" height="47" /> 
+                                <path d="M 0 -0.5 h 354.001" /> 
+                                <rect x="380" y="158" rx="9" ry="9" width="354" height="47" /> 
+                                <path d="M 0 -0.5 h 354.001" /> 
+                                <rect x="760" y="79" rx="9" ry="9" width="354" height="47" /> 
+                                <path d="M 0 -0.5 h 354.001" /> 
+                                <rect x="760" y="158" rx="9" ry="9" width="354" height="47" /> 
+                                <path d="M 0 -0.5 h 354.001" /> 
+                                <rect x="0" y="237" rx="9" ry="9" width="354" height="47" /> 
+                                <path d="M 0 -0.5 h 354.001" />
+                            </clipPath>
+                            <linearGradient id="fill">
+                            <stop
+                                offset="0.599964"
+                                stop-color="#d9d9d9"
+                                stop-opacity="1"
+                            >
+                                <animate
+                                attributeName="offset"
+                                values="-2; -2; 1"
+                                keyTimes="0; 0.25; 1"
+                                dur="2s"
+                                repeatCount="indefinite"
+                                ></animate>
+                            </stop>
+                            <stop
+                                offset="1.59996"
+                                stop-color="#ecebeb"
+                                stop-opacity="1"
+                            >
+                                <animate
+                                attributeName="offset"
+                                values="-1; -1; 2"
+                                keyTimes="0; 0.25; 1"
+                                dur="2s"
+                                repeatCount="indefinite"
+                                ></animate>
+                            </stop>
+                            <stop
+                                offset="2.59996"
+                                stop-color="#d9d9d9"
+                                stop-opacity="1"
+                            >
+                                <animate
+                                attributeName="offset"
+                                values="0; 0; 3"
+                                keyTimes="0; 0.25; 1"
+                                dur="2s"
+                                repeatCount="indefinite"
+                                ></animate>
+                            </stop>
+                            </linearGradient>
+                        </defs>
+                        </svg>
                 </div>
-                <h2 class="subheader">Acommodation</h2>
-                <div class="input-group">
-                    <div class="input-container one-third">
-                        <input readonly type="text" placeholder="Accommodation Name">
-                        <i class="material-icons">business</i>
+                
+                <div class="informations" v-else>
+    
+                    <h2 class="subheader">Personal Information</h2>
+    
+                    <div class="input-group">
+                        <div class="input-container">
+                            <input readonly v-model="info.email" type="text" placeholder="Email Address (@gmail.com)">
+                            <i class="material-icons">email</i>
+                        </div>
+                        <div class="input-container one-third">
+                            <input readonly v-model="info.first_name" type="text" placeholder="First Name">
+                            <i class="material-icons">person</i>
+                        </div>
+                        <div class="input-container one-third">
+                            <input readonly v-model="info.middle_name" type="text" placeholder="Middle Name">
+                            <i class="material-icons">person</i>
+                        </div>
+                        <div class="input-container one-third">
+                            <input readonly v-model="info.last_name" type="text" placeholder="Last Name">
+                            <i class="material-icons">person</i>
+                        </div>
+                        <div class="input-container one-third">
+                            <!-- <input type="text" placeholder="Gender"> -->
+                            <select readonly v-model="info.gender" name="gender" id="gender">
+                                <option value="" selected disabled>Select Gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
+                            <i class="material-icons">wc</i>
+                        </div>
+                        <div class="input-container one-third">
+                            <input readonly v-model="info.birthdate" type="date" placeholder="Birth Date">
+                            <i class="material-icons">event</i>
+                        </div>
+                        <div class="input-container one-third">
+                            <input readonly v-model="info.address" type="text" placeholder="Address">
+                            <i class="material-icons">location_on</i>
+                        </div>
+                        <div class="input-container one-third">
+                            <input readonly v-model="info.nationality" type="text" placeholder="Nationality">
+                            <i class="material-icons">language</i>
+                        </div>
                     </div>
-                    <div class="input-container one-third">
-                        <input readonly type="text" placeholder="Accommodation Location">
-                        <i class="material-icons">location_on</i>
+                    <h2 class="subheader">Acommodation</h2>
+                    <div class="input-group">
+                        <div class="input-container one-third">
+                            <input readonly v-model="info.name" type="text" placeholder="Accommodation Name">
+                            <i class="material-icons">business</i>
+                        </div>
+                        <div class="input-container one-third">
+                            <input readonly v-model="info.location" type="text" placeholder="Accommodation Location">
+                            <i class="material-icons">location_on</i>
+                        </div>
+                        <div class="input-container one-third">
+                            <input readonly v-model="info.days" type="text" placeholder="How many days">
+                            <i class="material-icons">event_available</i>
+                        </div>
                     </div>
-                    <div class="input-container one-third">
-                        <input readonly type="text" placeholder="How many days">
-                        <i class="material-icons">event_available</i>
-                    </div>
+
                 </div>
+
             </div>
         </div>
     </div>
@@ -284,10 +371,11 @@
 
 <script setup>
 import { useAuthStore } from '@/stores/auth';
-import {useRouter} from 'vue-router';
+import {useRoute, useRouter} from 'vue-router';
 import { makeRequest } from '@/plugins/axios';
 import toast from '@/plugins/toast';
 import AdminSidenav from '@/components/AdminSidenav.vue';
+import { onMounted, ref } from 'vue';
 
 const auth = useAuthStore();
 const router = useRouter();
@@ -307,4 +395,20 @@ async function logOut() {
 async function goBack() {
     window.history.length > 1 ? this.router.go(-1) : this.router.push('/admin/tourist-information')
 }
+
+const route = useRoute();
+const info = ref('loading...');
+
+onMounted(() => {
+
+    // Get the id from the router parameter
+    const id = route.params.id;
+
+    // make request using makeRequest from plugins/axios and get /tourists and put it in a reference
+    makeRequest.get(`/tourists/${id}`).then(res => {
+        if (res.data.success) {
+            info.value = res.data.data;
+        }
+    })
+})
 </script>
