@@ -31,19 +31,19 @@
                             <a href="#!">View Destinations</a>
                         </div>
                         <div class="item">
-                            <img src="../../assets/img/Location search-amico.svg" alt="">
+                            <img src="../../assets/img/Team spirit-amico.svg" alt="">
                             <h3>Tourist Count</h3>
                             <h2>23 Tourists</h2>
                             <router-link to="/admin/tourist-information">View Tourists</router-link>
                         </div>
                         <div class="item">
-                            <img src="../../assets/img/Location search-amico.svg" alt="">
+                            <img src="../../assets/img/Flying around the world-bro.svg" alt="">
                             <h3>Tourist Arrivals</h3>
                             <h2>23 Arrivals</h2>
                             <a href="#!">View Arrivals</a>
                         </div>
                         <div class="item">
-                            <img src="../../assets/img/Location search-amico.svg" alt="">
+                            <img src="../../assets/img/Sport family-rafiki.svg" alt="">
                             <h3>Tourist Activities</h3>
                             <h2>23 Activities</h2>
                             <a href="#!">View Activities</a>
