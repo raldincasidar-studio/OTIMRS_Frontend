@@ -20,7 +20,7 @@
                 <div class="header">
                     <div class="titles">
                         <h1>Tourist Information</h1>
-                        <p>100 tourists</p>
+                        <p>{{ tourists != 'loading...' ? tourists.length : '0' }} tourist(s)</p>
                     </div>
                 </div>
                 <div class="performance-grid" v-if="tourists == 'loading...'">
