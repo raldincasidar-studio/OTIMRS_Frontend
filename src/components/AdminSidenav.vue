@@ -12,14 +12,10 @@
                 <i class="material-icons">people</i>
                 Tourist Information
             </router-link>
-            <a href="#!">
+            <router-link to="/admin/attractions">
                 <i class="material-icons">beach_access</i>
-                Attraction
-            </a>
-            <a href="#!">
-                <i class="material-icons">hotel</i>
-                Acommodation
-            </a>
+                Attraction & Acommodation
+            </router-link>
             <a href="#!">
                 <i class="material-icons">pool</i>
                 Activities
