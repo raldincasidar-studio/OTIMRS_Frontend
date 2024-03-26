@@ -1,4 +1,4 @@
-*:not(.material-icons, .dont-base-reset) {
+*:not(.material-icons, .dont-base-reset, .swal2-container) {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
