@@ -29,6 +29,9 @@
                         </h1>
                     </div>
                     <div class="action">
+                        <button class="icon-button" @click="deleteAttraction()" title="Delete Attraction">
+                            <i class="material-icons">delete</i>
+                        </button>
                         <button @click="saveAttraction()" class="button">
                             <i class="material-icons">add</i>
                             Save Changes
@@ -139,6 +142,13 @@
                                 <option value="Restaurant">Restaurant</option>
                                 <option value="Museum">Museum</option>
                                 <option value="Beach">Beach</option>
+                                <option value="Landmark">Landmark</option>
+                                <option value="Statue">Statue</option>
+                                <option value="Theme Park">Theme Park</option>
+                                <option value="Cinema">Cinema</option>
+                                <option value="Shopping Mall">Shopping Mall</option>
+                                <option value="Gallery">Gallery</option>
+                                <option value="Natural Attraction">Natural Attraction</option>
                             </select>
                             <i class="material-icons">category</i>
                         </div>
@@ -213,10 +223,32 @@
             text-decoration: none;
             transition: all .3s cubic-bezier(0.165, 0.84, 0.44, 1);
             border: 0;
+            margin: 0 10px;
             cursor: pointer;
 
             &:hover {
                 opacity: 0.8;
+            }
+
+            &:active {
+                transform: scale(0.9);
+            }
+        }
+        .icon-button {
+            display: inline-block;
+            // background-color: #2A9DF2;
+            color: #c73b3b;
+            padding: 13px;
+            border-radius: 50%;
+            // box-shadow: 0 3px 6px rgba(0, 0, 0, 0.082);
+            text-decoration: none;
+            transition: all .3s cubic-bezier(0.165, 0.84, 0.44, 1);
+            border: 0;
+            margin: 0 10px;
+            cursor: pointer;
+
+            &:hover {
+                background-color: rgba(0, 0, 0, 0.114);
             }
 
             &:active {
@@ -422,6 +454,7 @@ import { makeRequest } from '@/plugins/axios';
 import toast from '@/plugins/toast';
 import AdminSidenav from '@/components/AdminSidenav.vue';
 import { onMounted, ref } from 'vue';
+import Swal from 'sweetalert2';
 
 const auth = useAuthStore();
 const router = useRouter();
@@ -480,6 +513,42 @@ async function saveAttraction() {
     })
 
     router.push('/admin/attractions');
+}
+
+async function deleteAttraction() {
+    await Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!',
+        customClass: {
+            container: 'dont-base-reset',
+            popup: 'dont-base-reset',
+            header: 'dont-base-reset',
+            title: 'dont-base-reset',
+            closeButton: 'dont-base-reset',
+            icon: 'dont-base-reset',
+            image: 'dont-base-reset',
+            content: 'dont-base-reset',
+            input: 'dont-base-reset',
+            actions: 'dont-base-reset',
+            confirmButton: 'dont-base-reset',
+            cancelButton: 'dont-base-reset',
+            footer: 'dont-base-resets'
+        }
+    }).then(async (result) => {
+        if (result.isConfirmed) {
+            await makeRequest.delete(`/tourist-attractions/delete/${route.params.id}`)
+            toast.fire({
+                title: 'Tourist Attraction deleted',
+                icon: 'success'
+            })
+            router.push('/admin/attractions');
+        }
+    })
 }
 
 onMounted(() => {
