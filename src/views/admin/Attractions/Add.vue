@@ -138,6 +138,13 @@
                             <option value="Restaurant">Restaurant</option>
                             <option value="Museum">Museum</option>
                             <option value="Beach">Beach</option>
+                            <option value="Landmark">Landmark</option>
+                            <option value="Statue">Statue</option>
+                            <option value="Theme Park">Theme Park</option>
+                            <option value="Cinema">Cinema</option>
+                            <option value="Shopping Mall">Shopping Mall</option>
+                            <option value="Gallery">Gallery</option>
+                            <option value="Natural Attraction">Natural Attraction</option>
                         </select>
                         <i class="material-icons">category</i>
                     </div>
