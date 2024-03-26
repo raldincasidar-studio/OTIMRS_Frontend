@@ -16,10 +16,10 @@
                 <i class="material-icons">beach_access</i>
                 Attraction & Acommodation
             </router-link>
-            <a href="#!">
+            <router-link to="/admin/activities">
                 <i class="material-icons">pool</i>
                 Activities
-            </a>
+            </router-link>
             <a href="#!">
                 <i class="material-icons">flight</i>
                 Arrivals
