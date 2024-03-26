@@ -20,7 +20,7 @@
                 <div class="header">
                     <div class="titles">
                         <h1>Tourist Attractions</h1>
-                        <p>100 tourist(s)</p>
+                        <p>{{ attractions == 'loading...' ? '0' : attractions.length }} tourist(s)</p>
                     </div>
                     <div class="action">
                         <router-link to="/admin/attractions/add" class="button">
@@ -36,7 +36,7 @@
                     </div>
                 </div>
                 <div class="performance-grid" v-else>
-                    <router-link :to="`/admin/attractions/1`" class="item" v-for="(attraction, i) in attractions" :key="i">
+                    <router-link :to="`/admin/attractions/${attraction.id}`" class="item" v-for="(attraction, i) in attractions" :key="i">
                         <div class="image-container" :style="`--image: url(${attraction.image_url || 'Weh'});`">
                             
                             <div class="informations">
@@ -44,7 +44,7 @@
                                     <p class="tag"><i>#{{ attraction.category || 'Unknown' }}</i></p>
                                     <h1>{{ attraction.name || 'Tourist Attraction' }}</h1>
                                     <p class="description">{{ attraction.description || 'Tourist attraction' }}</p>
-                                    <p><i class="material-icons">star</i><i class="material-icons">star</i><i class="material-icons">star</i><i class="material-icons">star</i><i class="material-icons">star</i></p>
+                                    <p><i class="material-icons" v-for="j in Number(attraction.rating)" :key="j">star</i></p>
                                 </div>
                             </div>
                             <div class="edit-button">
