@@ -20,10 +20,10 @@
                 <i class="material-icons">pool</i>
                 Activities
             </router-link>
-            <a href="#!">
+            <router-link to="/admin/arrivals">
                 <i class="material-icons">flight</i>
                 Arrivals
-            </a>
+            </router-link>
             <a href="#!">
                 <i class="material-icons">settings</i>
                 Admin Management
