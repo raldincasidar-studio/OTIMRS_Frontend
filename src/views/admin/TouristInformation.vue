@@ -106,6 +106,10 @@
                             <i class="material-icons">flight_land</i>
                             arrived on {{ moment(tourist.created_at).format('MMMM DD, YYYY hh:mm:ss A') }}
                         </span>
+                        <span class="tags">
+                            <i class="material-icons">home</i>
+                            at {{ tourist.name }}
+                        </span>
                     </router-link>
                 </div>
             </div>
