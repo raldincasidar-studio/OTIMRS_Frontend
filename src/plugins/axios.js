@@ -31,7 +31,7 @@ makeRequest.interceptors.response.use(
           title: 'Logged out',
           icon: 'info'
         })
-        router.push('/admin')
+        window.location.href = '/admin'
       }
       return Promise.reject()
     }
