@@ -278,9 +278,14 @@ async function saveDetails() {
         nationality: tourist.personal_information.nationality,
     })
 
-    if (submitToDatabase.data.message) toast.fire({
-        icon: "success",
-        title: submitToDatabase.data.message,
-    })
+    if (submitToDatabase.data.message) {
+        toast.fire({
+            icon: "success",
+            title: submitToDatabase.data.message,
+        })
+
+        tourist.accommodation = {}
+        tourist.personal_information = {}
+    }   
 }
 </script>
