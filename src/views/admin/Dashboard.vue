@@ -28,7 +28,7 @@
                             <img src="../../assets/img/Location search-amico.svg" alt="">
                             <h3>Tourist Destinations</h3>
                             <h2>23 Destinations</h2>
-                            <a href="#!">View Destinations</a>
+                            <router-link to="/admin/tourist-information">View Destinations</router-link>
                         </div>
                         <div class="item">
                             <img src="../../assets/img/Team spirit-amico.svg" alt="">
@@ -40,13 +40,13 @@
                             <img src="../../assets/img/Flying around the world-bro.svg" alt="">
                             <h3>Tourist Arrivals</h3>
                             <h2>23 Arrivals</h2>
-                            <a href="#!">View Arrivals</a>
+                            <router-link to="/admin/arrivals">View Arrivals</router-link>
                         </div>
                         <div class="item">
                             <img src="../../assets/img/Sport family-rafiki.svg" alt="">
                             <h3>Tourist Activities</h3>
                             <h2>23 Activities</h2>
-                            <a href="#!">View Activities</a>
+                            <router-link to="/admin/activities">View Activities</router-link>
                         </div>
                     </div>
                 </div>
