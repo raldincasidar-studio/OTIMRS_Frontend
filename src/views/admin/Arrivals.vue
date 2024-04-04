@@ -20,119 +20,40 @@
                 <div class="header">
                     <div class="titles">
                         <h1>Arrivals</h1>
-                        <p> {{ date_range ? moment(date_range[0]).format('MMMM DD, YYYY') + ' - ' + moment(date_range[1]).format('MMMM DD, YYYY') : 'Today' }}: {{ tourists != 'loading...' ? tourists.length : '0' }} tourist(s)</p>
+                        <p> {{ displayDates }}: {{ tourists != 'loading...' ? tourists.length : '0' }} tourist(s)</p>
                     </div>
                     <div class="action">
-                        <router-link to="/admin/attractions/add" class="button">
-                            <i class="material-icons">date_range</i>
-                            Print
-                        </router-link>
                         <a href="#!" class="button picker">
                             <i class="material-icons">date_range</i>
-                            {{ date_range ? moment(date_range[0]).format('MMMM DD, YYYY') + ' - ' + moment(date_range[1]).format('MMMM DD, YYYY') : 'Today' }}
-                            <VueDatePicker class="date-picker-orig" v-model="date_range" range="true"></VueDatePicker>
+                            {{ displayDates }}
+                            <VueDatePicker class="date-picker-orig" @closed="getData()" :enable-time-picker="false" v-model="date_range" :range="true"></VueDatePicker>
+                        </a>
+                        <a :href="`/admin/papers/arrivals?from=${moment(date_range[0]).format('YYYY-MM-DD')}&to=${moment(date_range[1]).format('YYYY-MM-DD')}`" target="_blank" class="button">
+                            <i class="material-icons">date_range</i>
+                            Print
                         </a>
                     </div>
                 </div>
-                <!-- <div class="performance-grid" v-if="tourists == 'loading...'">
-                    <a href="#!" class="item skeleton" v-for="i in 4" :key="i">
-                        <svg
-                            role="img"
-                            width="236"
-                            height="261"
-                            aria-labelledby="loading-aria"
-                            viewBox="0 0 236 261"
-                            preserveAspectRatio="none"
-                            >
-                            <title id="loading-aria">Loading...</title>
-                            <rect
-                                x="0"
-                                y="0"
-                                width="100%"
-                                height="100%"
-                                clip-path="url(#clip-path)"
-                                style='fill: url("#fill");'
-                            ></rect>
-                            <defs>
-                                <clipPath id="clip-path">
-                                    <path d="M 52 0 h 132 v 132 H 52 z" /> 
-                                    <rect x="0" y="164" rx="6" ry="6" width="236" height="29" /> 
-                                    <rect x="52" y="215" rx="6" ry="6" width="132" height="15" /> 
-                                    <rect x="52" y="246" rx="6" ry="6" width="132" height="15" />
-                                </clipPath>
-                                <linearGradient id="fill">
-                                <stop
-                                    offset="0.599964"
-                                    stop-color="#d9d9d9"
-                                    stop-opacity="1"
-                                >
-                                    <animate
-                                    attributeName="offset"
-                                    values="-2; -2; 1"
-                                    keyTimes="0; 0.25; 1"
-                                    dur="2s"
-                                    repeatCount="indefinite"
-                                    ></animate>
-                                </stop>
-                                <stop
-                                    offset="1.59996"
-                                    stop-color="#ecebeb"
-                                    stop-opacity="1"
-                                >
-                                    <animate
-                                    attributeName="offset"
-                                    values="-1; -1; 2"
-                                    keyTimes="0; 0.25; 1"
-                                    dur="2s"
-                                    repeatCount="indefinite"
-                                    ></animate>
-                                </stop>
-                                <stop
-                                    offset="2.59996"
-                                    stop-color="#d9d9d9"
-                                    stop-opacity="1"
-                                >
-                                    <animate
-                                    attributeName="offset"
-                                    values="0; 0; 3"
-                                    keyTimes="0; 0.25; 1"
-                                    dur="2s"
-                                    repeatCount="indefinite"
-                                    ></animate>
-                                </stop>
-                                </linearGradient>
-                            </defs>
-                            </svg>
-                    </a>
-                </div>
-                <div class="performance-grid" v-else>
-                    <router-link :to="`/admin/tourist-information/${tourist.id}`" class="item" v-for="(tourist, i) in tourists" :key="tourist.id">
-                        <i class="material-icons person-icon">portrait</i>
-                        <div class="contexts">
-                            <h2>{{ tourist.first_name }} {{ tourist.middle_name }} {{ tourist.last_name }}</h2>
-                            <span class="tags">
-                                <i class="material-icons">location_on</i>
-                                from {{ tourist.address }}
-                            </span><br>
-                            <span class="tags">
-                                <i class="material-icons">flight_land</i>
-                                arrived on {{ moment(tourist.created_at).format('MMMM DD, YYYY hh:mm:ss A') }}
-                            </span>
-                        </div>
-                    </router-link>
-                </div> -->
                 <div class="bordered-table">
                     <table>
                         <thead>
+                            <th style="text-align: center">#</th>
                             <th>Tourist Name</th>
                             <th>From</th>
                             <th>Arrived on</th>
                         </thead>
                         <tbody>
-                            <tr v-for="i in 30" :key="i">
-                                <td>{{ faker.person.fullName() }}</td>
-                                <td>{{ faker.location.city() }}</td>
-                                <td> <i class="material-icons">flight_land</i> {{ moment(faker.date.past()).format('MMMM DD, YYYY hh:mm:ss A') }}</td>
+                            <tr v-if="tourists == 'loading...'">
+                                <td colspan="4" style="text-align: center"> <i class="material-icons">info</i> Data is loading ...</td>
+                            </tr>
+                            <tr v-else-if="tourists.length < 1">
+                                <td colspan="4" style="text-align: center"><i class="material-icons">info</i> No tourists arived at {{ displayDates }}</td>
+                            </tr>
+                            <tr v-else v-for="(tourist, i) in tourists" :key="tourist.id">
+                                <td style="text-align: right">{{ i+1 }}</td>
+                                <td><i class="material-icons">person</i> {{ tourist.first_name }} {{ tourist.last_name }}</td>
+                                <td><i class="material-icons">place</i>{{ tourist.location }}</td>
+                                <td><i class="material-icons">flight_land</i> {{ moment(tourist.created_at).format('MMMM DD, YYYY hh:mm:ss A') }}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -151,10 +72,16 @@
 
 .dp__main {
     width: 100%;
+    display: flex;
 
     & > div {
         flex-grow: 1;
         width: 100%;
+
+        &[disabled="true"] {
+            position: absolute;
+            top: 0; 
+        }
     }
 }
 
@@ -171,7 +98,7 @@
     height: 100% !important;
     width: 100%;
     flex-grow: 1;
-    // opacity: 0 !important;
+    opacity: 0 !important;
 }
 </style>
 
@@ -284,6 +211,8 @@
         .header {
             display: flex;
             justify-content: space-between;
+            margin-bottom: 50px;
+            align-items: center;
             h1 {
                 font-size: 25px;
                 margin-top: 30px;
@@ -291,7 +220,6 @@
             
             p {
                 color: #939393;
-                margin-bottom: 50px;
             }
 
             .action {
@@ -444,7 +372,7 @@
                 border-bottom: 1px dashed #d4d4d4;
 
                 i.material-icons {
-                    color: #2A9DF2;
+                    color: #bababa;
                     margin-right: 10px;
                 }
             }
@@ -461,14 +389,14 @@ import toast from '@/plugins/toast';
 import { faker } from '@faker-js/faker';
 import moment from 'moment';
 import AdminSidenav from '@/components/AdminSidenav.vue';
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css'
 
 const auth = useAuthStore();
 const router = useRouter();
 
-const date_range = ref();
+const date_range = ref([new Date(), new Date()]);
 
 async function logOut() {
     
@@ -482,15 +410,29 @@ async function logOut() {
     router.push('/admin');
 }
 
+const displayDates = computed(() => {
+
+    // console.log(date_range.value[0], date_range.value[1])
+    if (date_range.value[0] == date_range.value[1]) return moment(date_range.value[0]).format('MMMM DD, YYYY');
+
+    return date_range.value ? moment(date_range.value[0]).format('MMMM DD, YYYY') + ' - ' + moment(date_range.value[1]).format('MMMM DD, YYYY')  : 'Today';
+});
+
 const tourists = ref('loading...');
 
-onMounted(() => {
-    // make request using makeRequest from plugins/axios and get /tourists and put it in a reference
-    makeRequest.get('/tourists').then(res => {
+function getData() {
+    tourists.value = 'loading...';
+    makeRequest.get(`/arrivals?from=${moment(date_range.value[0]).format('YYYY-MM-DD')}&to=${moment(date_range.value[1]).format('YYYY-MM-DD')}`).then(res => {
         if (res.data.success) {
+            console.log('Requested!');
             tourists.value = res.data.data;
         }
     })
+}
+
+onMounted(() => {
+    // make request using makeRequest from plugins/axios and get /tourists and put it in a reference
+    getData();
 })
 
 </script>
