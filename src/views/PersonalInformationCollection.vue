@@ -15,7 +15,7 @@ const last_name = ref('');
 const gender = ref('');
 const birthdate = ref('');
 const address = ref('');
-const nationality = ref('');
+const nationality = ref('Filipino');
 
 function goBack() {
     window.history.length > 1 ? this.router.go(-1) : this.router.push('/')
