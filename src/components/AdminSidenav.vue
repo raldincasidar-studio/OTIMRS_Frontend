@@ -24,10 +24,10 @@
                 <i class="material-icons">flight</i>
                 Arrivals
             </router-link>
-            <a href="#!">
+            <router-link to="/admin/management">
                 <i class="material-icons">settings</i>
                 Admin Management
-            </a>
+            </router-link>
             <a href="#!" @click="logOut()">
                 <i class="material-icons">logout</i>
                 Log Out

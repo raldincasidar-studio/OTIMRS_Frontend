@@ -114,6 +114,38 @@ const router = createRouter({
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/admin/Arrivals.vue')
+    },
+    {
+      path: '/admin/papers/arrivals',
+      name: 'admin/papers/arrivals',
+      // route level code-splitting
+      // this generates a separate chunk (About.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import('../views/admin/papers/Arrivals.vue')
+    },
+    {
+      path: '/admin/management',
+      name: 'admin/management',
+      // route level code-splitting
+      // this generates a separate chunk (About.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import('../views/admin/AdminManagement.vue')
+    },
+    {
+      path: '/admin/add',
+      name: 'admin/add',
+      // route level code-splitting
+      // this generates a separate chunk (About.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import('../views/admin/Admin/Add.vue')
+    },
+    {
+      path: '/admin/:id',
+      name: 'admin/:id',
+      // route level code-splitting
+      // this generates a separate chunk (About.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import('../views/admin/Admin/Edit.vue')
     }
   ]
 })
