@@ -20,7 +20,7 @@
                 <div class="header">
                     <div class="titles">
                         <h1>Tourist Attractions</h1>
-                        <p>{{ attractions == 'loading...' ? '0' : attractions.length }} tourist(s)</p>
+                        <p>{{ attractions == 'loading...' ? '0' : attractions?.length }} tourist(s)</p>
                     </div>
                     <div class="action">
                         <router-link to="/admin/attractions/add" class="button">

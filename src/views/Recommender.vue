@@ -3,12 +3,12 @@
 import toast from '@/plugins/toast';
 import moment from 'moment';
 import { onMounted, onUnmounted, ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 import {useTouristStore} from '@/stores/tourist';
 import { makeRequest } from '@/plugins/axios';
-import curDot from 'cursor-dot'
 
 const router = useRouter();
+const route = useRoute();
 const tourist = useTouristStore();
 
 const email = ref('');
@@ -74,28 +74,6 @@ onMounted( () => {
     intervalValue.value = setInterval(() => {
         time.value = moment().format('hh:mm:ss A');
     }, 1000);
-
-    const cursor = curDot({
-        borderColor: 'rgba(255,255,255,.38)',
-        broderWidth: 2
-    })
-        // or, set as you want
-        // cursor({
-        //   zIndex: 2,
-        //   diameter: 80,
-        //   borderWidth: 1,
-        //   borderColor: 'transparent',
-        //   easing: 4,
-        //   background: '#ddd'
-        
-    // })
-
-    cursor.over('h2, h1, h3, h4, h5, p, a, svg', {
-        // borderColor: 'rgba(255,255,255,.38)',
-        broderWidth: 2,
-        scale: 2,
-        background: '#fff',
-    })
 } )
 
 onUnmounted(() => {
@@ -134,128 +112,126 @@ function next() {
 </script>
 
 <template>
-    <div class="parallax">
-        <img src="@/assets/img/otimrs_logo.svg" alt="">
-        <h3>Maayong Pag abot!</h3>
-        <h1>Juan Luna!</h1>
-    </div>
-    <div class="bg">
-        <div class="form-container">
-            <div class="container">
-
-                
-
-                <div class="spacer-gif">
-                        <svg width="40px" height="100%" viewBox="0 0 247 390" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
-                            <path id="wheel" d="M123.359,79.775l0,72.843" style="fill:none;stroke:#2A9DF2;stroke-width:20px;"/>
-                            <path id="mouse" d="M236.717,123.359c0,-62.565 -50.794,-113.359 -113.358,-113.359c-62.565,0 -113.359,50.794 -113.359,113.359l0,143.237c0,62.565 50.794,113.359 113.359,113.359c62.564,0 113.358,-50.794 113.358,-113.359l0,-143.237Z" style="fill:none;stroke:#2A9DF2;stroke-width:20px;"/>
-                        </svg>
-                        <p>We have made you a tour guide for your trip<br><b>Just scroll down</b></p>
+    <div>
+        <div class="parallax">
+            <img src="@/assets/img/otimrs_logo.svg" alt="">
+            <h3>Maayong Pag abot!</h3>
+            <h1>{{ route.query.name || "Tourist" }}</h1>
+        </div>
+        <div class="bg">
+            <div class="form-container">
+                <div class="container">
+        
+                    <div class="spacer-gif">
+                            <svg width="40px" height="100%" viewBox="0 0 247 390" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
+                                <path id="wheel" d="M123.359,79.775l0,72.843" style="fill:none;stroke:#2A9DF2;stroke-width:20px;"/>
+                                <path id="mouse" d="M236.717,123.359c0,-62.565 -50.794,-113.359 -113.358,-113.359c-62.565,0 -113.359,50.794 -113.359,113.359l0,143.237c0,62.565 50.794,113.359 113.359,113.359c62.564,0 113.358,-50.794 113.358,-113.359l0,-143.237Z" style="fill:none;stroke:#2A9DF2;stroke-width:20px;"/>
+                            </svg>
+                            <p>We have made you a tour guide for your trip<br><b>Just scroll down</b></p>
+                        </div>
+                    <div class="introduction text-center">
+                        <p>
+                            <i class="material-icons">speaker_notes</i>
+                        </p>
+                        <h2 class="text-center">
+                            Welcome to the Beautiful General Luna City in the Philippines!
+                        </h2>
+                        <p class="text-center">
+                            Discover the charming city that combines modernity with rich history. General Luna City is nestled in the heart of Cagayan Valley and is a haven for tourists and travelers. Its picturesque landscapes and historic structures make it a must-visit destination for anyone looking to experience the beauty of the Philippines. From its vibrant night markets to its majestic churches and churches, General Luna City offers a unique blend of culture and nature that will leave you spellbound. So why wait? Come and explore this enchanting city and make memories that will last a lifetime!
+                        </p>
+                        <div class="arrow-down">
+                            <i class="material-icons">arrow_downward</i>
+                            <p>Discover your personalized tour</p>
+                        </div>
                     </div>
-
-                <div class="introduction text-center">
-                    <p>
-                        <i class="material-icons">speaker_notes</i>
-                    </p>
-                    <h2 class="text-center">
-                        Welcome to the Beautiful General Luna City in the Philippines!
-                    </h2>
-                    <p class="text-center">
-                        Discover the charming city that combines modernity with rich history. General Luna City is nestled in the heart of Cagayan Valley and is a haven for tourists and travelers. Its picturesque landscapes and historic structures make it a must-visit destination for anyone looking to experience the beauty of the Philippines. From its vibrant night markets to its majestic churches and churches, General Luna City offers a unique blend of culture and nature that will leave you spellbound. So why wait? Come and explore this enchanting city and make memories that will last a lifetime!
-                    </p>
-                    <div class="arrow-down">
-                        <i class="material-icons">arrow_downward</i>
-                        <p>Discover your personalized tour</p>
+                    <h1>
+                        <a class="icon-button">
+                            <i class="material-icons">tag</i>
+                        </a>
+                        Tourist Attraction
+                    </h1>
+        
+        
+                    <div class="performance-grid" v-if="attractions == 'loading...'">
+                        <div class="item-skeleton" v-for="i in 4" :key="i">
+                            <div class="image-skeleton"></div>
+                        </div>
                     </div>
-                </div>
-
-                <h1>
-                    <a class="icon-button">
-                        <i class="material-icons">tag</i>
-                    </a>
-                    Tourist Attraction
-                </h1>
-                
-                
-                <div class="performance-grid" v-if="attractions == 'loading...'">
-                    <div :to="`/admin/attractions/1`" class="item-skeleton" v-for="i in 4" :key="i">
-                        <div class="image-skeleton"></div>
-                    </div>
-                </div>
-                <div class="performance-grid" v-else>
-                    <router-link :to="`/admin/attractions/${attraction.id}`" class="item" v-for="(attraction, i) in attractions" :key="i">
-                        <div class="image-container" :style="`--image: url(${attraction.image_url || 'Weh'});`">
-                            
-                            <div class="informations">
-                                <div class="texts">
-                                    <p class="tag"><i>#{{ attraction.category || 'Unknown' }}</i></p>
-                                    <h1>{{ attraction.name || 'Tourist Attraction' }}</h1>
-                                    <p class="description">{{ attraction.description || 'Tourist attraction' }}</p>
-                                    <p><i class="material-icons" v-for="j in Number(attraction.rating)" :key="j">star</i></p>
+                    <div class="performance-grid" v-else>
+                        <router-link :to="`/attraction-info/${attraction.id}`" class="item" v-for="(attraction, i) in attractions" :key="i">
+                            <div class="image-container" :style="`--image: url(${attraction.image_url || 'Weh'});`">
+        
+                                <div class="informations">
+                                    <div class="texts">
+                                        <p class="tag"><i>#{{ attraction.category || 'Unknown' }}</i></p>
+                                        <h1>{{ attraction.name || 'Tourist Attraction' }}</h1>
+                                        <p class="description">{{ attraction.description || 'Tourist attraction' }}</p>
+                                        <p><i class="material-icons" v-for="j in Number(attraction.rating)" :key="j">star</i></p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </router-link>
-                </div>
-                <h1>
-                    <a class="icon-button">
-                        <i class="material-icons">tag</i>
-                    </a>
-                    Acommodation
-                </h1>
-                
-                
-                <div class="performance-grid" v-if="acommodations == 'loading...'">
-                    <div :to="`/admin/attractions/1`" class="item-skeleton" v-for="i in 4" :key="i">
-                        <div class="image-skeleton"></div>
+                        </router-link>
                     </div>
-                </div>
-                <div class="performance-grid" v-else>
-                    <router-link :to="`/admin/attractions/${attraction.id}`" class="item" v-for="(attraction, i) in acommodations" :key="i">
-                        <div class="image-container" :style="`--image: url(${attraction.image_url || 'Weh'});`">
-                            
-                            <div class="informations">
-                                <div class="texts">
-                                    <p class="tag"><i>#{{ attraction.category || 'Unknown' }}</i></p>
-                                    <h1>{{ attraction.name || 'Tourist Attraction' }}</h1>
-                                    <p class="description">{{ attraction.description || 'Tourist attraction' }}</p>
-                                    <p><i class="material-icons" v-for="j in Number(attraction.rating)" :key="j">star</i></p>
+                    <h1>
+                        <a class="icon-button">
+                            <i class="material-icons">tag</i>
+                        </a>
+                        Acommodation
+                    </h1>
+        
+        
+                    <div class="performance-grid" v-if="acommodations == 'loading...'">
+                        <div :to="`/admin/attractions/1`" class="item-skeleton" v-for="i in 4" :key="i">
+                            <div class="image-skeleton"></div>
+                        </div>
+                    </div>
+                    <div class="performance-grid" v-else>
+                        <router-link :to="`/attraction-info/${attraction.id}`" class="item" v-for="(attraction, i) in acommodations" :key="i">
+                            <div class="image-container" :style="`--image: url(${attraction.image_url || 'Weh'});`">
+        
+                                <div class="informations">
+                                    <div class="texts">
+                                        <p class="tag"><i>#{{ attraction.category || 'Unknown' }}</i></p>
+                                        <h1>{{ attraction.name || 'Tourist Attraction' }}</h1>
+                                        <p class="description">{{ attraction.description || 'Tourist attraction' }}</p>
+                                        <p><i class="material-icons" v-for="j in Number(attraction.rating)" :key="j">star</i></p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </router-link>
-                </div>
-                <h1>
-                    <a class="icon-button">
-                        <i class="material-icons">tag</i>
-                    </a>
-                    Activities
-                </h1>
-                
-                
-                
-                <div class="performance-grid activities" v-if="activities == 'loading...'">
-                    <div :to="`/admin/attractions/1`" class="item-skeleton" v-for="i in 3" :key="i">
-                        <div class="image-skeleton"></div>
+                        </router-link>
                     </div>
-                </div>
-                <div class="performance-grid activities" v-else>
-                    <router-link :to="`/admin/activities/${activity.id}`" class="item" v-for="(activity, i) in activities" :key="activity.id">
-                        <div class="image-container" :style="`--image: url(${activity.image_url});`">
-                            
-                            <!-- <div class="edit-button">
-                                <i class="material-icons">edit</i>
-                            </div> -->
+                    <h1>
+                        <a class="icon-button">
+                            <i class="material-icons">tag</i>
+                        </a>
+                        Activities
+                    </h1>
+        
+        
+        
+                    <div class="performance-grid activities" v-if="activities == 'loading...'">
+                        <div :to="`/admin/attractions/1`" class="item-skeleton" v-for="i in 3" :key="i">
+                            <div class="image-skeleton"></div>
                         </div>
-                        
-                        <div class="informations">
-                            <div class="texts">
-                                <p class="date"><i class="material-icons">calendar_today</i> {{ moment(activity.due_date).diff(moment(), 'days') < 0 ? 'Already finished' : moment(activity.due_date).diff(moment(), 'days') + (moment(activity.due_date).diff(moment(), 'days') > 1 ? ' days' : ' day') + ' left' }}</p>
-                                <h1>{{ activity.name }}</h1>
-                                <p class="description">{{ activity.description }}</p>
+                    </div>
+                    <div class="performance-grid activities" v-else>
+                        <router-link :to="`/activity-info/${activity.id}`" class="item" v-for="(activity, i) in activities" :key="activity.id">
+                            <div class="image-container" :style="`--image: url(${activity.image_url});`">
+        
+                                <!-- <div class="edit-button">
+                                    <i class="material-icons">edit</i>
+                                </div> -->
                             </div>
-                        </div>
-                    </router-link>
+        
+                            <div class="informations">
+                                <div class="texts">
+                                    <p class="date"><i class="material-icons">calendar_today</i> {{ moment(activity.due_date).diff(moment(), 'days') < 0 ? 'Already finished' : moment(activity.due_date).diff(moment(), 'days') + (moment(activity.due_date).diff(moment(), 'days') > 1 ? ' days' : ' day') + ' left' }}</p>
+                                    <h1>{{ activity.name }}</h1>
+                                    <p class="description">{{ activity.description }}</p>
+                                </div>
+                            </div>
+                        </router-link>
+                    </div>
                 </div>
             </div>
         </div>
